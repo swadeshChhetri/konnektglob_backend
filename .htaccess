@@ -1,0 +1,35 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Laravel Index
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # 300 Redirections (Keep This Part If Needed)
+    # Redirect for Android devices
+    RewriteCond %{HTTP_USER_AGENT} (Android) [NC]
+    RewriteRule ^.*/product/.*$ https://play.google.com/store/apps/details?id=com.wrteam.egrocer [R=301,L]
+
+    # Redirect for iPhone/iPad devices
+    RewriteCond %{HTTP_USER_AGENT} (iPhone|iPad) [NC]
+    RewriteRule ^.*/product/.*$ https://testflight.apple.com/join/fcRe3J9F [R=302,L]
+
+</IfModule>
+
+# Allow CORS
+Header always set Access-Control-Allow-Origin *
+Header always set Access-Control-Allow-Headers "Origin, Content-Type, Authorization, x-access-key"
