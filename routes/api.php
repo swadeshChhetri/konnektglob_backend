@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\SellerController;
 
+Route::get('/', function () {
+  return response()->json(['status' => 'Laravel API is running']);
+});
 Route::post('register', [AuthController::class, "register"]);
 Route::post('login', [AuthController::class, "login"]);
 Route::get('users/count', [UserController::class, 'getUserCount']);
